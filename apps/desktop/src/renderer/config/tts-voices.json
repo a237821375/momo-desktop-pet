@@ -1,0 +1,318 @@
+{
+  "v3Voices": [
+    {
+      "value": "zh_female_vv_uranus_bigtts",
+      "label": "Vivi 2.0 - 女声（中英）"
+    },
+    {
+      "value": "zh_female_xiaohe_uranus_bigtts",
+      "label": "小何 2.0 - 女声（中文）"
+    },
+    {
+      "value": "zh_male_m191_uranus_bigtts",
+      "label": "云舟 2.0 - 男声（中文）"
+    },
+    {
+      "value": "zh_male_taocheng_uranus_bigtts",
+      "label": "小天 2.0 - 男声（中文）"
+    }
+  ],
+  "v1Voices": [
+    {
+      "value": "zh_female_wanwanxiaohe_moon_bigtts",
+      "label": "【口音】湾湾小何（台湾）"
+    },
+    {
+      "value": "zh_female_linjianvhai_moon_bigtts",
+      "label": "【通用】邻家女孩"
+    },
+    {
+      "value": "zh_male_yuanboxiaoshu_moon_bigtts",
+      "label": "【通用】渊博小叔"
+    },
+    {
+      "value": "zh_female_wanqudashu_moon_bigtts",
+      "label": "【口音】湾区大叔（广东）"
+    },
+    {
+      "value": "zh_female_daimengchuanmei_moon_bigtts",
+      "label": "【口音】呆萌川妹（四川）"
+    },
+    {
+      "value": "zh_male_lengkugege_emo_v2_mars_bigtts",
+      "label": "【情感】冷酷哥哥"
+    },
+    {
+      "value": "zh_female_tianxinxiaomei_emo_v2_mars_bigtts",
+      "label": "【情感】甜心小美"
+    },
+    {
+      "value": "zh_female_gaolengyujie_emo_v2_mars_bigtts",
+      "label": "【情感】高冷御姐"
+    },
+    {
+      "value": "zh_male_aojiaobazong_emo_v2_mars_bigtts",
+      "label": "【情感】傲娇霸总"
+    },
+    {
+      "value": "zh_male_guangzhoudege_emo_mars_bigtts",
+      "label": "【情感】广州德哥"
+    },
+    {
+      "value": "zh_male_jingqiangkanye_emo_mars_bigtts",
+      "label": "【情感】京腔侃爷"
+    },
+    {
+      "value": "zh_female_linjuayi_emo_v2_mars_bigtts",
+      "label": "【情感】邻居阿姨"
+    },
+    {
+      "value": "zh_male_yourougongzi_emo_v2_mars_bigtts",
+      "label": "【情感】优柔公子"
+    },
+    {
+      "value": "zh_male_ruyayichen_emo_v2_mars_bigtts",
+      "label": "【情感】儒雅男友"
+    },
+    {
+      "value": "zh_male_junlangnanyou_emo_v2_mars_bigtts",
+      "label": "【情感】俊朗男友"
+    },
+    {
+      "value": "zh_male_beijingxiaoye_emo_v2_mars_bigtts",
+      "label": "【情感】北京小爷"
+    },
+    {
+      "value": "zh_female_roumeinvyou_emo_v2_mars_bigtts",
+      "label": "【情感】柔美女友"
+    },
+    {
+      "value": "zh_male_yangguangqingnian_emo_v2_mars_bigtts",
+      "label": "【情感】阳光青年"
+    },
+    {
+      "value": "zh_female_meilinvyou_emo_v2_mars_bigtts",
+      "label": "【情感】魅力女友"
+    },
+    {
+      "value": "zh_female_shuangkuaisisi_emo_v2_mars_bigtts",
+      "label": "【情感】爽快思思（中英）"
+    },
+    {
+      "value": "zh_male_shenyeboke_emo_v2_mars_bigtts",
+      "label": "【情感】深夜播客"
+    },
+    {
+      "value": "zh_female_vv_mars_bigtts",
+      "label": "【通用】Vivi"
+    },
+    {
+      "value": "zh_female_qinqienvsheng_moon_bigtts",
+      "label": "【通用】亲切女声"
+    },
+    {
+      "value": "zh_male_qingyiyuxuan_mars_bigtts",
+      "label": "【通用】阳光阿辰"
+    },
+    {
+      "value": "zh_male_xudong_conversation_wvae_bigtts",
+      "label": "【通用】快乐小东"
+    },
+    {
+      "value": "en_male_jason_conversation_wvae_bigtts",
+      "label": "【通用】开朗学长（英）"
+    },
+    {
+      "value": "zh_female_sophie_conversation_wvae_bigtts",
+      "label": "【通用】魅力苏菲"
+    },
+    {
+      "value": "zh_female_tianmeitaozi_mars_bigtts",
+      "label": "【通用】甜美桃子"
+    },
+    {
+      "value": "zh_female_qingxinnvsheng_mars_bigtts",
+      "label": "【通用】清新女声"
+    },
+    {
+      "value": "zh_female_zhixingnvsheng_mars_bigtts",
+      "label": "【通用】知性女声"
+    },
+    {
+      "value": "zh_male_qingshuangnanda_mars_bigtts",
+      "label": "【通用】清爽男大"
+    },
+    {
+      "value": "zh_male_yangguangqingnian_moon_bigtts",
+      "label": "【通用】阳光青年"
+    },
+    {
+      "value": "zh_female_tianmeixiaoyuan_moon_bigtts",
+      "label": "【通用】甜美小源"
+    },
+    {
+      "value": "zh_female_qingchezizi_moon_bigtts",
+      "label": "【通用】清澈梓梓"
+    },
+    {
+      "value": "zh_male_jieshuoxiaoming_moon_bigtts",
+      "label": "【通用】解说小明"
+    },
+    {
+      "value": "zh_female_kailangjiejie_moon_bigtts",
+      "label": "【通用】开朗姐姐"
+    },
+    {
+      "value": "zh_male_linjiananhai_moon_bigtts",
+      "label": "【通用】邻家男孩"
+    },
+    {
+      "value": "zh_female_tianmeiyueyue_moon_bigtts",
+      "label": "【通用】甜美悦悦"
+    },
+    {
+      "value": "zh_female_xinlingjitang_moon_bigtts",
+      "label": "【通用】心灵鸡汤"
+    },
+    {
+      "value": "zh_male_wenrouxiaoge_mars_bigtts",
+      "label": "【通用】温柔小哥"
+    },
+    {
+      "value": "zh_female_cancan_mars_bigtts",
+      "label": "【通用】灿灿/Shiny（中英）"
+    },
+    {
+      "value": "zh_female_shuangkuaisisi_moon_bigtts",
+      "label": "【通用】爽快思思/Skye（中英）"
+    },
+    {
+      "value": "zh_male_wennuanahu_moon_bigtts",
+      "label": "【通用】温暖阿虎/Alvin（中英）"
+    },
+    {
+      "value": "zh_male_shaonianzixin_moon_bigtts",
+      "label": "【通用】少年梓辛/Brayan（中英）"
+    },
+    {
+      "value": "zh_female_yueyunv_mars_bigtts",
+      "label": "【口音】粤语小溏"
+    },
+    {
+      "value": "zh_male_yuzhouzixuan_moon_bigtts",
+      "label": "【口音】豫州子轩（河南）"
+    },
+    {
+      "value": "zh_male_guangxiyuanzhou_moon_bigtts",
+      "label": "【口音】广西远舟"
+    },
+    {
+      "value": "zh_male_zhoujielun_emo_v2_mars_bigtts",
+      "label": "【口音】双节棍小哥（台湾）"
+    },
+    {
+      "value": "zh_male_guozhoudege_moon_bigtts",
+      "label": "【口音】广州德哥（广东）"
+    },
+    {
+      "value": "zh_male_haoyuxiaoge_moon_bigtts",
+      "label": "【口音】浩宇小哥（青岛）"
+    },
+    {
+      "value": "zh_male_beijingxiaoye_moon_bigtts",
+      "label": "【口音】北京小爷"
+    },
+    {
+      "value": "zh_male_jingqiangkanye_moon_bigtts",
+      "label": "【口音】京腔侃爷/Harmony（京+英）"
+    },
+    {
+      "value": "zh_female_meituojieer_moon_bigtts",
+      "label": "【口音】妹坨洁儿（长沙）"
+    },
+    {
+      "value": "zh_male_hupunan_mars_bigtts",
+      "label": "【IP】沪普男"
+    },
+    {
+      "value": "zh_male_lubanqihao_mars_bigtts",
+      "label": "【IP】鲁班七号"
+    },
+    {
+      "value": "zh_female_yangmi_mars_bigtts",
+      "label": "【IP】林潇"
+    },
+    {
+      "value": "zh_female_linzhiling_mars_bigtts",
+      "label": "【IP】玲玲姐姐"
+    },
+    {
+      "value": "zh_female_jiyejizi2_mars_bigtts",
+      "label": "【IP】春日部姐姐"
+    },
+    {
+      "value": "zh_male_tangseng_mars_bigtts",
+      "label": "【IP】唐僧"
+    },
+    {
+      "value": "zh_male_zhuangzhou_mars_bigtts",
+      "label": "【IP】庄周"
+    },
+    {
+      "value": "zh_male_zhubajie_mars_bigtts",
+      "label": "【IP】猪八戒"
+    },
+    {
+      "value": "zh_female_ganmaodianyin_mars_bigtts",
+      "label": "【IP】感冒电音姐姐"
+    },
+    {
+      "value": "zh_female_naying_mars_bigtts",
+      "label": "【IP】直率英子"
+    },
+    {
+      "value": "zh_female_leidian_mars_bigtts",
+      "label": "【IP】女雷神"
+    },
+    {
+      "value": "zh_male_naiqimengwa_mars_bigtts",
+      "label": "【角色】奶气萌娃"
+    },
+    {
+      "value": "zh_female_popo_mars_bigtts",
+      "label": "【角色】婆婆"
+    },
+    {
+      "value": "zh_female_gaolengyujie_moon_bigtts",
+      "label": "【角色】高冷御姐"
+    },
+    {
+      "value": "zh_male_aojiaobazong_moon_bigtts",
+      "label": "【角色】傲娇霸总"
+    },
+    {
+      "value": "zh_female_meilinvyou_moon_bigtts",
+      "label": "【角色】魅力女友"
+    },
+    {
+      "value": "zh_male_shenyeboke_moon_bigtts",
+      "label": "【角色】深夜播客"
+    },
+    {
+      "value": "zh_female_sajiaonvyou_moon_bigtts",
+      "label": "【角色】柔美女友"
+    },
+    {
+      "value": "zh_female_yuanqinvyou_moon_bigtts",
+      "label": "【角色】撒娇学妹"
+    },
+    {
+      "value": "zh_male_dongfanghaoran_moon_bigtts",
+      "label": "【角色】东方浩然"
+    },
+    {
+      "value": "zh_female_yingyujiaoyu_mars_bigtts",
+      "label": "【教育】Tina老师（中英）"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "name": "@desktop-pet/desktop",
+  "version": "1.0.0",
+  "description": "Desktop Pet AI - Electron Application",
+  "main": "dist/main/main.js",
+  "scripts": {
+    "dev": "npm run build:renderer && npm run build:main && electron .",
+    "dev:watch": "concurrently \"vite build --watch\" \"tsc -p tsconfig.main.json --watch\"",
+    "build": "npm run build:renderer && npm run build:main",
+    "build:renderer": "vite build",
+    "build:main": "tsc -p tsconfig.main.json",
+    "package": "electron-builder"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "@types/better-sqlite3": "^7.6.13",
+    "better-sqlite3": "^12.5.0",
+    "electron-store": "^8.1.0",
+    "node-fetch": "^2.7.0",
+    "pixi-live2d-display": "^0.4.0",
+    "pixi.js": "^6.5.10",
+    "uuid": "^13.0.0",
+    "vue": "^3.5.25",
+    "vue-advanced-chat": "^2.1.1",
+    "wait-on": "^9.0.3",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/node-fetch": "^2.6.11",
+    "@types/uuid": "^10.0.0",
+    "@types/ws": "^8.18.1",
+    "@vitejs/plugin-vue": "^6.0.3",
+    "concurrently": "^8.2.2",
+    "electron": "^28.3.3",
+    "electron-builder": "^24.9.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.0",
+    "vite-plugin-electron": "^0.28.0"
+  }
+}

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desktop Pet AI</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: transparent;
+      font-family: 'Microsoft YaHei', sans-serif;
+      -webkit-app-region: no-drag;  /* 默认禁用 */
+    }
+    
+    #app {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    
+    #live2d-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      /* -webkit-app-region: drag; */  /* 暂时禁用窗口拖拽，测试眼睛追踪 */
+    }
+    
+    .no-drag {
+      -webkit-app-region: no-drag;
+    }
+    
+    /* 控制岛 - 右侧垂直按钮组 */
+    #control-island {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 1000;
+      -webkit-app-region: no-drag;
+      transition: opacity 0.3s ease;
+    }
+    
+    #control-island.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    /* 所有按钮始终显示 */
+    #control-island .control-btn {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+      transition: all 0.3s ease;
+    }
+    
+    .control-btn {
+      width: 32px;   /* 48 * 2/3 = 32 */
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(40, 40, 40, 0.85);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      -webkit-app-region: no-drag;  /* 默认禁用拖动 */
+    }
+    
+    /* 移动按钮启用拖动 */
+    #btn-move {
+      -webkit-app-region: drag !important;  /* 使用 !important 确保覆盖父元素设置 */
+      cursor: move !important;
+      pointer-events: auto !important;  /* 确保始终可以接收鼠标事件 */
+    }
+    
+    .control-btn:hover {
+      background: rgba(60, 60, 60, 0.95);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateX(-4px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    .control-btn:active {
+      transform: translateX(-2px) scale(0.95);
+    }
+    
+    .control-btn.active {
+      background: rgba(80, 120, 255, 0.9);
+      border-color: rgba(120, 160, 255, 0.5);
+    }
+    
+    .control-btn svg {
+      width: 16px;   /* 24 * 2/3 = 16 */
+      height: 16px;
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    
+    .control-btn.dragging {
+      cursor: move;
+      background: rgba(80, 120, 255, 0.9);
+    }
+    
+    /* 动作按钮容器 */
+    #motion-buttons {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 1000;
+      -webkit-app-region: no-drag;
+    }
+    
+    .motion-btn {
+      padding: 6px 12px;
+      background: rgba(40, 40, 40, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      -webkit-app-region: no-drag;
+    }
+    
+    .motion-btn:hover {
+      background: rgba(60, 60, 60, 0.95);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    .motion-btn:active {
+      transform: translateY(0);
+    }
+    
+    /* 角色底部动作按钮区域 - 已废弃 */
+    /* #motion-buttons-container {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 1000;
+      -webkit-app-region: no-drag;
+      max-width: 90%;
+    } */
+    
+    /* 动作/表情按钮样式已移除 */
+  </style>
+</head>
+<body>
+  <div id="app">
+    <canvas id="live2d-canvas"></canvas>
+    
+    <!-- 控制岛 -->
+    <div id="control-island">
+      <!-- 移动窗口按钮（独立，始终显示） -->
+      <div class="control-btn" id="btn-move" title="拖动移动窗口">
+        <svg viewBox="0 0 24 24">
+          <path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3"></path>
+          <circle cx="12" cy="12" r="1"></circle>
+        </svg>
+      </div>
+      
+      
+      <!-- 设置按钮 -->
+      <div class="control-btn" id="btn-settings" title="设置">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M12 1v6m0 6v6M12 1a11 11 0 1 0 0 22 11 11 0 0 0 0-22z" opacity="0.3"></path>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </div>
+      
+      <!-- 聊天按钮 -->
+      <div class="control-btn" id="btn-chat" title="聊天">
+        <svg viewBox="0 0 24 24">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+      </div>
+      
+      <!-- 动作/表情按钮 -->
+      <div class="control-btn" id="btn-motion" title="动作/表情">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"></path>
+        </svg>
+      </div>
+      
+      <!-- 刷新按钮 -->
+      <div class="control-btn" id="btn-refresh" title="刷新窗口">
+        <svg viewBox="0 0 24 24">
+          <path d="M23 4v6h-6"></path>
+          <path d="M1 20v-6h6"></path>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <!-- Live2D Cubism Core SDK - 必须在模块代码之前加载 -->
+  <script src="./live2dcubismcore.min.js"></script>
+  <script type="module" src="./main.ts"></script>
+</body>
+</html>

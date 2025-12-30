@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>动作 & 表情控制</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: #2d2d2d;
+      color: #ffffff;
+      font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+      padding: 20px;
+      overflow-y: auto;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 10px;
+    }
+    
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #4CAF50;
+      text-align: center;
+    }
+    
+    .subtitle {
+      text-align: center;
+      color: #999;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+    
+    .section {
+      margin-bottom: 30px;
+      background: rgba(60, 60, 60, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    
+    .section h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #2196F3;
+      border-bottom: 2px solid rgba(33, 150, 243, 0.3);
+      padding-bottom: 8px;
+    }
+    
+    .command-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 12px;
+      margin-top: 15px;
+    }
+    
+    .command-item {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .command-item:hover {
+      background: rgba(33, 150, 243, 0.2);
+      border-color: rgba(33, 150, 243, 0.5);
+      transform: translateY(-2px);
+    }
+    
+    .command-name {
+      font-weight: 600;
+      color: #4CAF50;
+      font-size: 14px;
+    }
+    
+    .command-code {
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 12px;
+      color: #aaa;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 4px 8px;
+      border-radius: 4px;
+      word-break: break-all;
+    }
+    
+    .tip-box {
+      background: rgba(33, 150, 243, 0.1);
+      border-left: 3px solid #2196F3;
+      border-radius: 4px;
+      padding: 15px;
+      margin-top: 20px;
+    }
+    
+    .tip-box strong {
+      color: #2196F3;
+    }
+    
+    .empty-state {
+      text-align: center;
+      color: #666;
+      padding: 30px;
+      font-style: italic;
+    }
+    
+    code {
+      font-family: 'Consolas', 'Monaco', monospace;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: #FF9800;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎭 动作 & 表情控制</h1>
+    <p class="subtitle">点击命令卡片直接执行 <button id="btn-refresh" style="margin-left: 10px; padding: 4px 12px; background: rgba(33, 150, 243, 0.2); border: 1px solid rgba(33, 150, 243, 0.5); border-radius: 4px; color: #fff; cursor: pointer;">🔄 刷新</button></p>
+    
+    <!-- 动作区域 -->
+    <div class="section">
+      <h2>🎬 动作命令</h2>
+      <div class="command-list" id="motion-list">
+        <!-- 动态生成 -->
+      </div>
+    </div>
+    
+    <!-- 表情区域 -->
+    <div class="section">
+      <h2>😊 表情命令</h2>
+      <div class="command-list" id="expression-list">
+        <!-- 动态生成 -->
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    console.log('=== Motion Window Loaded ===');
+    console.log('electronAPI 可用:', !!window.electronAPI);
+    if (window.electronAPI) {
+      console.log('playMotion 方法:', typeof window.electronAPI.playMotion);
+      console.log('playExpression 方法:', typeof window.electronAPI.playExpression);
+      console.log('getMotions 方法:', typeof window.electronAPI.getMotions);
+      console.log('getExpressions 方法:', typeof window.electronAPI.getExpressions);
+    }
+    
+    // 动态加载动作和表情列表
+    async function loadMotionsAndExpressions() {
+      if (!window.electronAPI) {
+        console.error('electronAPI 不可用');
+        return;
+      }
+      
+      try {
+        // 等待500ms，然后立即获取一次
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // 获取动作列表
+        const motionsData = await window.electronAPI.getMotions();
+        console.log('获取到的动作数据:', motionsData);
+        
+        // 获取表情列表
+        const expressionsData = await window.electronAPI.getExpressions();
+        console.log('获取到的表情数据:', expressionsData);
+        
+        // 渲染动作列表
+        renderMotions(motionsData);
+        
+        // 渲染表情列表
+        renderExpressions(expressionsData);
+        
+      } catch (error) {
+        console.error('加载动作/表情列表失败:', error);
+      }
+    }
+    
+    // 渲染动作列表
+    function renderMotions(motionsData) {
+      const motionList = document.getElementById('motion-list');
+      motionList.innerHTML = ''; // 清空
+      
+      const allMotions = [];
+      
+      // 遍历所有动作组
+      Object.entries(motionsData).forEach(([group, count]) => {
+        for (let i = 0; i < count; i++) {
+          const displayName = group ? `${group} ${i}` : `动作 ${i}`;
+          allMotions.push({
+            name: displayName,
+            group: group,
+            index: i
+          });
+        }
+      });
+      
+      if (allMotions.length === 0) {
+        motionList.innerHTML = '<div class="empty-state">当前模型无动作</div>';
+        return;
+      }
+      
+      // 渲染动作按钮
+      allMotions.forEach(motion => {
+        const item = document.createElement('div');
+        item.className = 'command-item';
+        item.innerHTML = `
+          <div class="command-name">${motion.name}</div>
+          <div class="command-code">${motion.group}[${motion.index}]</div>
+        `;
+        
+        item.addEventListener('click', async () => {
+          console.log('点击动作按钮:', motion.name, 'group:', motion.group, 'index:', motion.index);
+          if (window.electronAPI) {
+            try {
+              await window.electronAPI.playMotion(motion.group, motion.index);
+              console.log('动作执行成功:', motion.name);
+              item.style.background = 'rgba(76, 175, 80, 0.3)';
+              setTimeout(() => {
+                item.style.background = '';
+              }, 300);
+            } catch (error) {
+              console.error('动作执行失败:', error);
+              item.style.background = 'rgba(244, 67, 54, 0.3)';
+              setTimeout(() => {
+                item.style.background = '';
+              }, 300);
+            }
+          }
+        });
+        
+        motionList.appendChild(item);
+      });
+    }
+    
+    // 渲染表情列表
+    function renderExpressions(expressionsData) {
+      const expressionList = document.getElementById('expression-list');
+      expressionList.innerHTML = ''; // 清空
+      
+      if (!expressionsData || expressionsData.length === 0) {
+        expressionList.innerHTML = '<div class="empty-state">当前模型无表情</div>';
+        return;
+      }
+      
+      // 渲染表情按钮
+      expressionsData.forEach(exprName => {
+        const item = document.createElement('div');
+        item.className = 'command-item';
+        item.innerHTML = `
+          <div class="command-name">${exprName}</div>
+          <div class="command-code">${exprName}</div>
+        `;
+        
+        item.addEventListener('click', async () => {
+          console.log('点击表情按钮:', exprName);
+          if (window.electronAPI) {
+            try {
+              await window.electronAPI.playExpression(exprName);
+              console.log('表情执行成功:', exprName);
+              item.style.background = 'rgba(76, 175, 80, 0.3)';
+              setTimeout(() => {
+                item.style.background = '';
+              }, 300);
+            } catch (error) {
+              console.error('表情执行失败:', error);
+              item.style.background = 'rgba(244, 67, 54, 0.3)';
+              setTimeout(() => {
+                item.style.background = '';
+              }, 300);
+            }
+          }
+        });
+        
+        expressionList.appendChild(item);
+      });
+    }
+    
+    // 页面加载后自动加载
+    loadMotionsAndExpressions();
+    
+    // 刷新按钮
+    document.getElementById('btn-refresh')?.addEventListener('click', () => {
+      console.log('🔄 刷新动作/表情列表');
+      loadMotionsAndExpressions();
+    });
+    
+    console.log('=== Motion Window Render Complete ===');
+  </script>
+</body>
+</html>

@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>设置 - Desktop Pet AI</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      color: #fff;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 30px;
+      text-align: center;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: #fff;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+      padding-bottom: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    input[type="text"],
+    input[type="password"],
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    select:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    select option {
+      background: #2a5298;
+      color: #fff;
+    }
+
+    /* optgroup 分组标签样式 - 加强对比度 */
+    select optgroup {
+      background: #1e3c72;
+      color: #ffd700;
+      font-weight: bold;
+      font-size: 14px;
+      font-style: normal;
+    }
+
+    /* optgroup 下的选项 */
+    select optgroup option {
+      background: #3a5ba8;
+      color: #fff;
+      padding-left: 20px;
+      font-weight: normal;
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .hint {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 5px;
+    }
+
+    .status {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      display: none;
+      z-index: 10000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      animation: slideDown 0.3s ease;
+    }
+    
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    .status.success {
+      background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      display: block;
+    }
+
+    .status.error {
+      background: linear-gradient(135deg, #f44336 0%, #e53935 100%);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      display: block;
+    }
+
+    .config-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .subsection {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+    }
+
+    .subsection-title {
+      font-size: 16px;
+      margin-bottom: 15px;
+      color: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding-bottom: 8px;
+    }
+
+    .provider-config {
+      margin-bottom: 15px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+    }
+
+    .provider-header-simple {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .provider-icon {
+      font-size: 20px;
+    }
+
+    .provider-name {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .provider-content {
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .toggle-icon {
+      transition: transform 0.3s;
+    }
+
+    .toggle-icon.open {
+      transform: rotate(180deg);
+    }
+
+    .status-badge {
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      background: rgba(244, 67, 54, 0.2);
+      color: #f44336;
+    }
+
+    .status-badge.configured {
+      background: rgba(76, 175, 80, 0.2);
+      color: #4caf50;
+    }
+
+    .model-list {
+      margin-top: 15px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .model-list h4 {
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .model-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      margin-bottom: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .model-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .model-item.selected {
+      border-color: #667eea;
+      background: rgba(102, 126, 234, 0.15);
+    }
+
+    .model-info {
+      flex: 1;
+    }
+
+    .model-name {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .model-meta {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .config-info {
+      flex: 1;
+    }
+
+    .config-name {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .config-detail {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .config-tags {
+      display: flex;
+      gap: 4px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 6px;
+      font-size: 10px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .tag.primary {
+      background: rgba(102, 126, 234, 0.3);
+      color: #a8b4ff;
+    }
+
+    .config-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-small {
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+
+    .btn-small:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .btn-small.danger {
+      background: rgba(244, 67, 54, 0.2);
+      border-color: rgba(244, 67, 54, 0.5);
+    }
+
+    .btn-small.danger:hover {
+      background: rgba(244, 67, 54, 0.3);
+    }
+
+    .btn-add {
+      width: 100%;
+      padding: 10px;
+      background: rgba(76, 175, 80, 0.2);
+      border: 1px solid rgba(76, 175, 80, 0.5);
+      border-radius: 6px;
+      color: #4caf50;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+
+    .btn-add:hover {
+      background: rgba(76, 175, 80, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* 音色列表样式 */
+    .voice-list {
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 10px 0;
+    }
+
+    .voice-group-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 8px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .voice-item {
+      display: flex;
+      align-items: center;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .voice-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .voice-item input[type="radio"] {
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .voice-item label {
+      flex: 1;
+      margin: 0;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn-voice-test {
+      padding: 4px 12px;
+      background: rgba(102, 126, 234, 0.3);
+      border: 1px solid rgba(102, 126, 234, 0.5);
+      border-radius: 4px;
+      color: #a8b4ff;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+
+    .btn-voice-test:hover {
+      background: rgba(102, 126, 234, 0.5);
+    }
+
+    .btn-voice-test:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Tab 样式 */
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .tab {
+      padding: 12px 24px;
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-bottom: 3px solid transparent;
+      position: relative;
+      bottom: -2px;
+    }
+
+    .tab:hover {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .tab.active {
+      color: #fff;
+      border-bottom-color: #667eea;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      border-radius: 12px;
+      padding: 30px;
+      width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-title {
+      font-size: 22px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>⚙️ 设置</h1>
+
+    <!-- Tab 导航 -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('llm')">🤖 LLM 设置</button>
+      <button class="tab" onclick="switchTab('tts')">🔊 TTS 设置</button>
+    </div>
+
+    <!-- LLM Tab 内容 -->
+    <div id="tab-llm" class="tab-content active">
+      <div class="section">
+        <!-- 第一块：模型提供商配置 -->
+        <div class="subsection">
+          <h3 class="subsection-title">模型提供商配置</h3>
+          
+          <!-- 千问 -->
+          <div class="provider-config">
+            <div class="provider-header-simple">
+              <span class="provider-icon">💬</span>
+              <span class="provider-name">通义千问</span>
+              <span id="qwen-status" class="status-badge">未配置</span>
+            </div>
+            <div class="form-group">
+              <label for="qwen-api-key">API Key</label>
+              <input type="password" id="qwen-api-key" placeholder="请输入千问 API Key">
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <button class="btn-small btn-primary" onclick="saveProvider('qwen')">💾 保存</button>
+              <button class="btn-small" onclick="refreshModels('qwen')">🔄 刷新模型</button>
+            </div>
+            <p class="hint" id="qwen-hint"></p>
+          </div>
+
+          <!-- OpenRouter -->
+          <div class="provider-config">
+            <div class="provider-header-simple">
+              <span class="provider-icon">🌐</span>
+              <span class="provider-name">OpenRouter</span>
+              <span id="openrouter-status" class="status-badge">未配置</span>
+            </div>
+            <div class="form-group">
+              <label for="openrouter-api-key">API Key</label>
+              <input type="password" id="openrouter-api-key" placeholder="请输入 OpenRouter API Key">
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <button class="btn-small btn-primary" onclick="saveProvider('openrouter')">💾 保存</button>
+              <button class="btn-small" onclick="refreshModels('openrouter')">🔄 刷新模型</button>
+            </div>
+            <p class="hint" id="openrouter-hint"></p>
+          </div>
+        </div>
+
+        <!-- 第二块：当前使用的模型 -->
+        <div class="subsection">
+          <h3 class="subsection-title">当前使用的模型</h3>
+          
+          <div class="form-group">
+            <label for="llm-model">选择模型</label>
+            <select id="llm-model">
+              <option value="">-- 请先配置并刷新模型 --</option>
+            </select>
+            <p class="hint" id="model-hint"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TTS Tab 内容 -->
+    <div id="tab-tts" class="tab-content">
+      <div class="section">
+        <div class="form-group">
+          <label for="tts-app-id">App ID</label>
+          <input type="text" id="tts-app-id" placeholder="请输入 App ID">
+        </div>
+        
+        <div class="form-group">
+          <label for="tts-access-token">Access Token</label>
+          <input type="password" id="tts-access-token" placeholder="请输入 Access Token">
+        </div>
+
+        <div class="form-group">
+          <label for="tts-secret-key">Secret Key</label>
+          <input type="password" id="tts-secret-key" placeholder="请输入 Secret Key">
+        </div>
+
+        <div class="form-group">
+          <label for="tts-voice-type">音色选择</label>
+          <div class="voice-list">
+            <!-- V3 大模型音色 -->
+            <div class="voice-group-title">V3 大模型音色（推荐）</div>
+            <div class="voice-item" data-voice="zh_female_cancan_mars_bigtts">
+              <input type="radio" name="voice-select" value="zh_female_cancan_mars_bigtts" id="voice-cancan">
+              <label for="voice-cancan">灿灿 - 女声</label>
+              <button class="btn-voice-test" onclick="testVoice('zh_female_cancan_mars_bigtts')">▶ 试听</button>
+            </div>
+            <div class="voice-item" data-voice="zh_female_vv_uranus_bigtts">
+              <input type="radio" name="voice-select" value="zh_female_vv_uranus_bigtts" id="voice-vivi">
+              <label for="voice-vivi">Vivi 2.0 - 女声（中英）</label>
+              <button class="btn-voice-test" onclick="testVoice('zh_female_vv_uranus_bigtts')">▶ 试听</button>
+            </div>
+            <div class="voice-item" data-voice="zh_female_xiaohe_uranus_bigtts">
+              <input type="radio" name="voice-select" value="zh_female_xiaohe_uranus_bigtts" id="voice-xiaohe">
+              <label for="voice-xiaohe">小何 2.0 - 女声（中文）</label>
+              <button class="btn-voice-test" onclick="testVoice('zh_female_xiaohe_uranus_bigtts')">▶ 试听</button>
+            </div>
+            <div class="voice-item" data-voice="zh_male_m191_uranus_bigtts">
+              <input type="radio" name="voice-select" value="zh_male_m191_uranus_bigtts" id="voice-yunzhou">
+              <label for="voice-yunzhou">云舟 2.0 - 男声（中文）</label>
+              <button class="btn-voice-test" onclick="testVoice('zh_male_m191_uranus_bigtts')">▶ 试听</button>
+            </div>
+            <div class="voice-item" data-voice="zh_male_taocheng_uranus_bigtts">
+              <input type="radio" name="voice-select" value="zh_male_taocheng_uranus_bigtts" id="voice-xiaotian">
+              <label for="voice-xiaotian">小天 2.0 - 男声（中文）</label>
+              <button class="btn-voice-test" onclick="testVoice('zh_male_taocheng_uranus_bigtts')">▶ 试听</button>
+            </div>
+            
+            <!-- V1 流式音色 -->
+            <div class="voice-group-title" style="margin-top: 15px;">V1 经典音色</div>
+            <div class="voice-item" data-voice="BV700_V2_streaming">
+              <input type="radio" name="voice-select" value="BV700_V2_streaming" id="voice-bv700">
+              <label for="voice-bv700">通用女声</label>
+              <button class="btn-voice-test" onclick="testVoice('BV700_V2_streaming')">▶ 试听</button>
+            </div>
+            <div class="voice-item" data-voice="BV701_V2_streaming">
+              <input type="radio" name="voice-select" value="BV701_V2_streaming" id="voice-bv701">
+              <label for="voice-bv701">通用男声</label>
+              <button class="btn-voice-test" onclick="testVoice('BV701_V2_streaming')">▶ 试听</button>
+            </div>
+            <div class="voice-item" data-voice="BV406_streaming">
+              <input type="radio" name="voice-select" value="BV406_streaming" id="voice-bv406">
+              <label for="voice-bv406">灿灿 - 可爱女声</label>
+              <button class="btn-voice-test" onclick="testVoice('BV406_streaming')">▶ 试听</button>
+            </div>
+            <div class="voice-item" data-voice="BV407_streaming">
+              <input type="radio" name="voice-select" value="BV407_streaming" id="voice-bv407">
+              <label for="voice-bv407">炀炀 - 温柔女声</label>
+              <button class="btn-voice-test" onclick="testVoice('BV407_streaming')">▶ 试听</button>
+            </div>
+          </div>
+          <p class="hint">点击试听按钮预览音色效果</p>
+        </div>
+        
+        <!-- TTS 保存按钮 -->
+        <button class="btn-primary" id="btn-save-tts" style="width: 100%; margin-top: 15px;">💾 保存 TTS 配置</button>
+      </div>
+    </div>
+
+    <div class="status" id="status-message"></div>
+  </div>
+
+  <script>
+    // Tab 切换
+    function switchTab(tabName) {
+      // 移除所有激活状态
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      
+      // 激活当前 Tab
+      event.target.classList.add('active');
+      document.getElementById(`tab-${tabName}`).classList.add('active');
+    }
+    // Provider 状态管理
+    let providers = {
+      qwen: { apiKey: '', models: [] },
+      openrouter: { apiKey: '', models: [] }
+    };
+    let currentModel = '';
+
+    // 获取 TTS 配置的辅助函数
+    function getTTSConfig() {
+      const selectedVoice = document.querySelector('input[name="voice-select"]:checked');
+      const voiceType = selectedVoice ? selectedVoice.value : 'zh_female_cancan_mars_bigtts';
+      return {
+        appId: document.getElementById('tts-app-id')?.value?.trim() || '',
+        accessToken: document.getElementById('tts-access-token')?.value?.trim() || '',
+        secretKey: document.getElementById('tts-secret-key')?.value?.trim() || '',
+        voiceType: voiceType,
+        resourceId: getResourceId(voiceType)  // 自动获取
+      };
+    }
+
+    // 保存提供商配置（默认刷新模型）
+    window.saveProvider = async (provider) => {
+      const apiKeyInput = document.getElementById(`${provider}-api-key`);
+      const apiKey = apiKeyInput.value.trim();
+      
+      if (!apiKey) {
+        alert('请输入 API Key');
+        return;
+      }
+
+      providers[provider].apiKey = apiKey;
+      
+      // 立即保存到主进程
+      try {
+        const settings = {
+          qwenApiKey: providers.qwen.apiKey,
+          qwenModels: providers.qwen.models,
+          openrouterApiKey: providers.openrouter.apiKey,
+          openrouterModels: providers.openrouter.models,
+          currentModel: document.getElementById('llm-model')?.value || '',
+          tts: getTTSConfig()
+        };
+        
+        await window.electronAPI.saveSettings(settings);
+        showStatus(`${provider === 'qwen' ? '千问' : 'OpenRouter'} API Key 已保存`, 'success');
+        
+        // 默认刷新一次模型
+        await refreshModels(provider);
+      } catch (error) {
+        showStatus('保存失败: ' + error.message, 'error');
+      }
+    };
+
+    // 刷新模型列表
+    window.refreshModels = async (provider) => {
+      const apiKey = providers[provider].apiKey;
+      const hint = document.getElementById(`${provider}-hint`);
+      const statusBadge = document.getElementById(`${provider}-status`);
+      
+      if (!apiKey) {
+        alert('请先保存 API Key');
+        return;
+      }
+
+      hint.textContent = '正在加载模型列表...';
+      hint.style.color = 'rgba(255, 255, 255, 0.7)';
+
+      try {
+        // 加载模型
+        await loadModels(provider, apiKey);
+        
+        // 更新状态
+        statusBadge.textContent = `已配置 (${providers[provider].models.length} 个模型)`;
+        statusBadge.classList.add('configured');
+        
+        hint.textContent = `✅ 已加载 ${providers[provider].models.length} 个模型`;
+        hint.style.color = '#4caf50';
+        
+        // 更新模型选择器
+        renderAllModels();
+        
+        // 保存模型列表到主进程
+        const settings = {
+          qwenApiKey: providers.qwen.apiKey,
+          qwenModels: providers.qwen.models,
+          openrouterApiKey: providers.openrouter.apiKey,
+          openrouterModels: providers.openrouter.models,
+          currentModel: document.getElementById('llm-model')?.value || '',
+          tts: getTTSConfig()
+        };
+        await window.electronAPI.saveSettings(settings);
+        
+        showStatus(`${provider === 'qwen' ? '千问' : 'OpenRouter'} 模型列表已缓存`, 'success');
+      } catch (error) {
+        hint.textContent = `❌ 加载失败: ${error.message}`;
+        hint.style.color = '#f44336';
+        showStatus('加载模型失败', 'error');
+      }
+    };
+
+    // 加载模型列表
+    async function loadModels(provider, apiKey) {
+      const urls = {
+        qwen: 'https://dashscope.aliyuncs.com/compatible-mode/v1/models',
+        openrouter: 'https://openrouter.ai/api/v1/models'
+      };
+
+      const response = await fetch(urls[provider], {
+        headers: { 'Authorization': `Bearer ${apiKey}` }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      providers[provider].models = data.data || [];
+    }
+
+    // 渲染所有模型（按提供商分组）
+    function renderAllModels() {
+      const select = document.getElementById('llm-model');
+      select.innerHTML = '<option value="">请选择模型</option>';
+
+      // 通义千问分组
+      if (providers.qwen.models.length > 0) {
+        const group = document.createElement('optgroup');
+        group.label = '通义千问';
+        
+        providers.qwen.models.forEach(model => {
+          const option = document.createElement('option');
+          option.value = `qwen:${model.id}`;
+          option.textContent = model.id;
+          group.appendChild(option);
+        });
+        
+        select.appendChild(group);
+      }
+
+      // OpenRouter 分组
+      if (providers.openrouter.models.length > 0) {
+        const group = document.createElement('optgroup');
+        group.label = 'OpenRouter';
+        
+        providers.openrouter.models.forEach(model => {
+          const option = document.createElement('option');
+          option.value = `openrouter:${model.id}`;
+          option.textContent = model.id;
+          group.appendChild(option);
+        });
+        
+        select.appendChild(group);
+      }
+      
+      // 添加 change 事件监听 - 选择模型后立即缓存
+      select.removeEventListener('change', onModelChange); // 移除旧监听器
+      select.addEventListener('change', onModelChange);
+    }
+    
+    // 模型选择变化时立即保存
+    async function onModelChange(event) {
+      const selectedModel = event.target.value;
+      if (!selectedModel) return;
+      
+      currentModel = selectedModel;
+      
+      try {
+        // 立即保存当前选择的模型
+        const settings = {
+          qwenApiKey: providers.qwen.apiKey,
+          qwenModels: providers.qwen.models,
+          openrouterApiKey: providers.openrouter.apiKey,
+          openrouterModels: providers.openrouter.models,
+          currentModel: selectedModel,
+          tts: {
+            apiKey: document.getElementById('tts-api-key')?.value?.trim() || '',
+            appId: document.getElementById('tts-app-id')?.value?.trim() || '',
+            voiceType: document.getElementById('tts-voice-type')?.value?.trim() || 'BV700_V2_streaming'
+          }
+        };
+        
+        await window.electronAPI.saveSettings(settings);
+        
+        const hint = document.getElementById('model-hint');
+        hint.textContent = `✅ 已选择: ${selectedModel}`;
+        hint.style.color = '#4caf50';
+        
+        console.log('模型已缓存:', selectedModel);
+      } catch (error) {
+        console.error('保存模型失败:', error);
+        showStatus('保存模型失败: ' + error.message, 'error');
+      }
+    }
+
+    // 加载配置
+    async function loadSettings() {
+      try {
+        const settings = await window.electronAPI.getSettings();
+        
+        // 加载 API Keys 和模型缓存
+        if (settings.qwenApiKey) {
+          document.getElementById('qwen-api-key').value = settings.qwenApiKey;
+          providers.qwen.apiKey = settings.qwenApiKey;
+        }
+        if (settings.qwenModels) {
+          providers.qwen.models = settings.qwenModels;
+          const statusBadge = document.getElementById('qwen-status');
+          statusBadge.textContent = `已配置 (${providers.qwen.models.length} 个模型)`;
+          statusBadge.classList.add('configured');
+        }
+        
+        if (settings.openrouterApiKey) {
+          document.getElementById('openrouter-api-key').value = settings.openrouterApiKey;
+          providers.openrouter.apiKey = settings.openrouterApiKey;
+        }
+        if (settings.openrouterModels) {
+          providers.openrouter.models = settings.openrouterModels;
+          const statusBadge = document.getElementById('openrouter-status');
+          statusBadge.textContent = `已配置 (${providers.openrouter.models.length} 个模型)`;
+          statusBadge.classList.add('configured');
+        }
+        
+        // 渲染模型列表
+        renderAllModels();
+        
+        // 加载当前模型
+        if (settings.currentModel) {
+          currentModel = settings.currentModel;
+          document.getElementById('llm-model').value = currentModel;
+        }
+        
+        // TTS
+        document.getElementById('tts-app-id').value = settings.tts?.appId || '';
+        document.getElementById('tts-access-token').value = settings.tts?.accessToken || '';
+        document.getElementById('tts-secret-key').value = settings.tts?.secretKey || '';
+        
+        // 加载音色选择
+        const voiceType = settings.tts?.voiceType || 'zh_female_cancan_mars_bigtts';
+        const voiceRadio = document.querySelector(`input[value="${voiceType}"]`);
+        if (voiceRadio) {
+          voiceRadio.checked = true;
+        }
+      } catch (error) {
+        console.error('加载设置失败:', error);
+      }
+    }
+    
+    // 根据音色类型自动获取 Resource ID
+    function getResourceId(voiceType) {
+      // V3 大模型音色（2.0）使用 seed-tts-2.0
+      // 目前只有 uranus_bigtts 系列是 2.0
+      const v3Voices = [
+        'zh_female_vv_uranus_bigtts',
+        'zh_female_xiaohe_uranus_bigtts',
+        'zh_male_m191_uranus_bigtts',
+        'zh_male_taocheng_uranus_bigtts'
+      ];
+      
+      if (v3Voices.includes(voiceType)) {
+        return 'seed-tts-2.0';
+      }
+      
+      // 其他所有音色（包括 _mars_bigtts, _moon_bigtts, _emo_* 等）都使用 1.0
+      return 'seed-tts-1.0';
+    }
+
+    // 试听音色
+    let currentAudio = null;
+    window.testVoice = async function(voiceType) {
+      const appId = document.getElementById('tts-app-id').value.trim();
+      const accessToken = document.getElementById('tts-access-token').value.trim();
+      
+      if (!appId || !accessToken) {
+        alert('请先配置 App ID 和 Access Token');
+        return;
+      }
+      
+      const button = event.target;
+      button.disabled = true;
+      button.textContent = '⚙ 合成中...';
+      
+      try {
+        // 停止当前播放
+        if (currentAudio) {
+          currentAudio.pause();
+          currentAudio = null;
+        }
+        
+        // 判断是 V1 还是 V3 音色
+        const isV3Voice = voiceType.includes('bigtts');
+        
+        if (!isV3Voice) {
+          // V1 音色暂不支持试听
+          alert('V1 音色试听功能正在开发中，请选择 V3 大模型音色试听');
+          button.textContent = '▶ 试听';
+          button.disabled = false;
+          return;
+        }
+        
+        // 调用 V3 TTS API
+        const response = await fetch('https://openspeech.bytedance.com/api/v3/tts/unidirectional', {
+          method: 'POST',
+          headers: {
+            'X-Api-App-Id': appId,
+            'X-Api-Access-Key': accessToken,
+            'Content-Type': 'application/json',
+            'Connection': 'keep-alive',
+          },
+          body: JSON.stringify({
+            user: { uid: 'preview_user' },
+            req_params: {
+              text: '你好呀，我是 momo。爱你哟',
+              speaker: voiceType,
+              audio_params: {
+                format: 'mp3',
+                sample_rate: 24000,
+              },
+              additions: JSON.stringify({
+                explicit_language: 'zh',
+                disable_markdown_filter: true,
+              }),
+            },
+          }),
+        });
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('API Error:', errorText);
+          throw new Error(`HTTP ${response.status}: ${errorText}`);
+        }
+        
+        // 读取流式响应
+        const audioChunks = [];
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+        
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+          
+          for (const line of lines) {
+            if (!line.trim()) continue;
+            
+            try {
+              const data = JSON.parse(line);
+              if (data.code === 0 && data.data) {
+                const audioBuffer = Uint8Array.from(atob(data.data), c => c.charCodeAt(0));
+                audioChunks.push(audioBuffer);
+              }
+              if (data.code === 20000000) break;
+              if (data.code > 0 && data.code !== 20000000) {
+                throw new Error(`TTS Error (${data.code}): ${data.message || 'Unknown error'}`);
+              }
+            } catch (e) {
+              if (e.message.includes('TTS Error')) throw e;
+              console.warn('解析失败:', line);
+            }
+          }
+        }
+        
+        if (audioChunks.length === 0) {
+          throw new Error('未收到音频数据');
+        }
+        
+        // 合并音频
+        const totalLength = audioChunks.reduce((sum, chunk) => sum + chunk.length, 0);
+        const merged = new Uint8Array(totalLength);
+        let offset = 0;
+        for (const chunk of audioChunks) {
+          merged.set(chunk, offset);
+          offset += chunk.length;
+        }
+        
+        // 播放音频
+        const blob = new Blob([merged], { type: 'audio/mp3' });
+        const url = URL.createObjectURL(blob);
+        currentAudio = new Audio(url);
+        currentAudio.play();
+        
+        button.textContent = '▶ 试听';
+      } catch (error) {
+        console.error('试听失败:', error);
+        alert('试听失败: ' + error.message);
+        button.textContent = '▶ 试听';
+      } finally {
+        button.disabled = false;
+      }
+    };
+
+    // 保存 TTS 配置
+    document.getElementById('btn-save-tts').addEventListener('click', async () => {
+      const ttsAppId = document.getElementById('tts-app-id').value.trim();
+      const ttsAccessToken = document.getElementById('tts-access-token').value.trim();
+      const ttsSecretKey = document.getElementById('tts-secret-key').value.trim();
+      const selectedVoice = document.querySelector('input[name="voice-select"]:checked');
+      const ttsVoiceType = selectedVoice ? selectedVoice.value : 'zh_female_cancan_mars_bigtts';
+      
+      if (!ttsAppId || !ttsAccessToken || !ttsSecretKey) {
+        showStatus('请填写 App ID、Access Token 和 Secret Key', 'error');
+        return;
+      }
+      
+      // 自动根据音色类型设置 Resource ID
+      const ttsResourceId = getResourceId(ttsVoiceType);
+      
+      const settings = {
+        qwenApiKey: providers.qwen.apiKey,
+        qwenModels: providers.qwen.models,
+        openrouterApiKey: providers.openrouter.apiKey,
+        openrouterModels: providers.openrouter.models,
+        currentModel: document.getElementById('llm-model').value,
+        tts: {
+          appId: ttsAppId,
+          accessToken: ttsAccessToken,
+          secretKey: ttsSecretKey,
+          voiceType: ttsVoiceType,
+          resourceId: ttsResourceId  // 自动设置
+        }
+      };
+    
+      try {
+        await window.electronAPI.saveSettings(settings);
+        showStatus('TTS 配置已保存！', 'success');
+      } catch (error) {
+        showStatus('保存失败: ' + error.message, 'error');
+      }
+    });
+
+    // 显示状态消息
+    function showStatus(message, type) {
+      const statusEl = document.getElementById('status-message');
+      statusEl.textContent = message;
+      statusEl.className = 'status ' + type;
+      
+      if (type === 'success') {
+        setTimeout(() => {
+          statusEl.className = 'status';
+        }, 3000);
+      }
+    }
+
+    // 页面加载时加载设置
+    loadSettings();
+  </script>
+</body>
+</html>
